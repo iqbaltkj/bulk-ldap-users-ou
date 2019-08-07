@@ -1,18 +1,18 @@
-echo "nama user?"
-read nama
-echo "passwordnya?"
+echo "username?"
+read name
+echo "password?"
 read pass
-echo "berapa banyak?"
-read banyak
-echo "OU apa?"
+echo "how much?"
+read total
+echo "OU ?"
 read OU
 
-sed -i -e s/iniapaan/$OU/g /etc/ldapscripts/ldapscripts.conf
+sed -i -e s/Users/$OU/g /etc/ldapscripts/ldapscripts.conf
 
-for (( i=1; i<=$banyak; i++))
+for (( i=1; i<=$total; i++))
 do
-ldapadduser $nama$i 1000
-ldapsetpasswd $nama$i skill39!
+ldapadduser $name$i 1000
+ldapsetpasswd $name$i $pass
 done
 
-sed -i -e s/$OU/iniapaan/g /etc/ldapscripts/ldapscripts.conf
+sed -i -e s/$OU/Users/g /etc/ldapscripts/ldapscripts.conf
