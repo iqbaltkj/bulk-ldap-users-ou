@@ -1,0 +1,6 @@
+---- give excecute permission ----
+$ sudo chmod +x ou.sh
+
+
+---- run the script ----
+$ sudo bash ou.sh
