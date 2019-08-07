@@ -1,0 +1,9 @@
+---- Create ldapscripts format file ----
+
+$ sudo vim /etc/ldapscripts/ou.ldif
+__________________________________________________________
+dn: ou=YourOU,dc=yourdomain,dc=net
+objectClass: organizationalUnit
+__________________________________________________________
+
+$ sudo ldapadd -D "cn=admin,dc=yourdomain,dc=net" -f /etc/ldapscripts/ou.ldif -w yourpassword
