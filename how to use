@@ -1,0 +1,6 @@
+---- give execute permission ----
+$ sudo chmod +x ldap.sh
+
+
+---- run the scripts ----
+$ sudo bash ldap.sh
