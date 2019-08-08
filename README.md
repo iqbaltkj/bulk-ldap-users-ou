@@ -6,6 +6,9 @@ $ sudo git clone https://github.com/iqbaltkj/bulk-ldap-users-ou
 
 
 
+
+
+
 ------------------------------------------------   Configure LDAP Server ---------------------------------------------------
 
 [ Configure slapd ]
