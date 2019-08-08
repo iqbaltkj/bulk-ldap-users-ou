@@ -1,5 +1,0 @@
-1. Install and configure ldap server [ LDAP Configuration ]
-
-2. Create OU [ Run ou.sh for automatically made OU or Create manual OU using ldapscripts ]
-
-3. Create LDAP Users Automatically [ Run ldap.sh scripts ]
