@@ -18,6 +18,7 @@ ________________________________________________________________________________
 #This file should be world readable but not world writable.
 
 BASE    dc=yourdomain,dc=net
+
 URI     ldap://yourdomain
 
 #SIZELIMIT      12
