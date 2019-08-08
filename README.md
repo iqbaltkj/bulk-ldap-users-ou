@@ -10,33 +10,6 @@ $ sudo git clone https://github.com/iqbaltkj/bulk-ldap-users-ou
 
 $ sudo vim /etc/ldap/ldap.conf
 _________________________________________________________________________________
-
-BASE    dc=yourdomain,dc=net
-URI     ldap://yourdomain
-
-TLS_CACERT      /etc/ssl/certs/ca-certificates.crt
-___________________________________________________________________________________
-
-
----- restart slapd ----
-$ sudo systemctl restart slapd
-
-
-
-#Configure ldapscripts
-
-#Set password for admin ldap server
-
-$ sudo echo -n yourpassword > /etc/ldapscripts/ldapscripts.passwd
-
-
-#Configure ldapscripts configuration file
-
-$ sudo vim /etc/ldapscripts/ldapscripts.conf
-___________________________________________________________________________________
-
-$ sudo vim /etc/ldap/ldap.conf
-_________________________________________________________________________________
 #
 #LDAP Defaults
 #
@@ -57,17 +30,20 @@ ________________________________________________________________________________
 
 
 ---- restart slapd ----
+
 $ sudo systemctl restart slapd
 
 
 [Configure ldapscripts]
 
 ---- set password for admin ldap server ----
+
 $ sudo echo -n yourpassword > /etc/ldapscripts/ldapscripts.passwd
 
 
 ---- configure ldapscripts file configuration ----
-$sudo vim /etc/ldapscripts/ldapscripts.conf
+
+$ sudo vim /etc/ldapscripts/ldapscripts.conf
 ___________________________________________________________________________________
 
 #Copyright (C) 2005 Ganaël LAPLANCHE - Linagora
