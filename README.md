@@ -4,12 +4,7 @@ $ sudo apt-get install slapd ldapscripts
 #  Copy scripts to your host
 $ sudo git clone https://github.com/iqbaltkj/bulk-ldap-users-ou
 
-
-
-
-
-
-------------------------------------------------   Configure LDAP Server ---------------------------------------------------
+# Configure LDAP Server
 
 [ Configure slapd ]
 
@@ -28,7 +23,7 @@ $ sudo systemctl restart slapd
 
 
 
-# Configure ldapscripts
+#Configure ldapscripts
 
 #Set password for admin ldap server
 
@@ -43,11 +38,11 @@ ________________________________________________________________________________
 $ sudo vim /etc/ldap/ldap.conf
 _________________________________________________________________________________
 #
-# LDAP Defaults
+#LDAP Defaults
 #
 
-# See ldap.conf(5) for details
-# This file should be world readable but not world writable.
+#See ldap.conf(5) for details
+#This file should be world readable but not world writable.
 
 BASE    dc=yourdomain,dc=net
 URI     ldap://yourdomain
@@ -56,7 +51,7 @@ URI     ldap://yourdomain
 #TIMELIMIT      15
 #DEREF          never
 
-# TLS certificates (needed for GnuTLS)
+#TLS certificates (needed for GnuTLS)
 TLS_CACERT      /etc/ssl/certs/ca-certificates.crt
 ___________________________________________________________________________________
 
