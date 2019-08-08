@@ -1,7 +1,3 @@
-# bulk-ldap-user-pass
-how to automatically create ldap user and set password using ldapscripts
-
-
 ---- install slapd and ldapscripts ----
 $ sudo apt-get install slapd ldapscripts
 
