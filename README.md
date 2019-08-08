@@ -1,5 +1,3 @@
----------------------------------------------------- How To Install --------------------------------------------------------
-
 #  Install package
 $ sudo apt-get install slapd ldapscripts
 
@@ -11,6 +9,33 @@ $ sudo git clone https://github.com/iqbaltkj/bulk-ldap-users-ou
 ------------------------------------------------   Configure LDAP Server ---------------------------------------------------
 
 [ Configure slapd ]
+
+$ sudo vim /etc/ldap/ldap.conf
+_________________________________________________________________________________
+
+BASE    dc=yourdomain,dc=net
+URI     ldap://yourdomain
+
+TLS_CACERT      /etc/ssl/certs/ca-certificates.crt
+___________________________________________________________________________________
+
+
+---- restart slapd ----
+$ sudo systemctl restart slapd
+
+
+
+# Configure ldapscripts
+
+#Set password for admin ldap server
+
+$ sudo echo -n yourpassword > /etc/ldapscripts/ldapscripts.passwd
+
+
+#Configure ldapscripts configuration file
+
+$ sudo vim /etc/ldapscripts/ldapscripts.conf
+___________________________________________________________________________________
 
 $ sudo vim /etc/ldap/ldap.conf
 _________________________________________________________________________________
@@ -37,102 +62,100 @@ ________________________________________________________________________________
 $ sudo systemctl restart slapd
 
 
-
 [Configure ldapscripts]
 
-# Set password for admin ldap server
-
+---- set password for admin ldap server ----
 $ sudo echo -n yourpassword > /etc/ldapscripts/ldapscripts.passwd
 
 
-# Configure ldapscripts configuration file
-
-$ sudo vim /etc/ldapscripts/ldapscripts.conf
+---- configure ldapscripts file configuration ----
+$sudo vim /etc/ldapscripts/ldapscripts.conf
 ___________________________________________________________________________________
-#  Copyright (C) 2005 Ganaël LAPLANCHE - Linagora
-#  Copyright (C) 2006-2017 Ganaël LAPLANCHE
-#
-#  This program is free software; you can redistribute it and/or
-#  modify it under the terms of the GNU General Public License
-#  as published by the Free Software Foundation; either version 2
-#  of the License, or (at your option) any later version.
-#
-#  This program is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
-#
-#  You should have received a copy of the GNU General Public License
-#  along with this program; if not, write to the Free Software
-#  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
-#  USA.
 
-# Note for Debian users:
-# On Debian system ldapscripts will try to parse and use nslcd config.
-# Look on commented variables and description lines started with DEBIAN.
-# But you could override it's values here.
+#Copyright (C) 2005 Ganaël LAPLANCHE - Linagora
+#Copyright (C) 2006-2017 Ganaël LAPLANCHE
+#
+#This program is free software; you can redistribute it and/or
+#modify it under the terms of the GNU General Public License
+#as published by the Free Software Foundation; either version 2
+#of the License, or (at your option) any later version.
+#
+#This program is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#GNU General Public License for more details.
+#
+#You should have received a copy of the GNU General Public License
+#along with this program; if not, write to the Free Software
+#Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
+#USA.
+
+#Note for Debian users:
+#On Debian system ldapscripts will try to parse and use nslcd config.
+#Look on commented variables and description lines started with DEBIAN.
+#But you could override it's values here.
 
 
-# LDAP server
-# DEBIAN: value from /etc/nslcd.conf (uri) is used.
+#LDAP server
+#DEBIAN: value from /etc/nslcd.conf (uri) is used.
 SERVER="ldap://yourdomain.net"
 
-# Suffixes
-# DEBIAN: values from /etc/nslcd.conf (base maps) are used.
+#Suffixes
+#DEBIAN: values from /etc/nslcd.conf (base maps) are used.
 SUFFIX="dc=yourdomain,dc=net" # Global suffix
 #GSUFFIX="ou=Groups"        # Groups ou (just under $SUFFIX)
 USUFFIX="ou=Users"         # Users ou (just under $SUFFIX)
 #MSUFFIX="ou=Machines"      # Machines ou (just under $SUFFIX)
 
-# Authentication type
-# DEBIAN: value from /etc/nslcd.conf (sasl_mech) is used.
-# If empty, use simple authentication
-# Else, use the value as an SASL authentication mechanism
+#Authentication type
+#DEBIAN: value from /etc/nslcd.conf (sasl_mech) is used.
+#If empty, use simple authentication
+#Else, use the value as an SASL authentication mechanism
 #SASLAUTH=""
 #SASLAUTH="GSSAPI"
 
-# Simple authentication parameters
-# The following BIND* parameters are ignored if SASLAUTH is set
+#Simple authentication parameters
+#The following BIND* parameters are ignored if SASLAUTH is set
 BINDDN="cn=admin,dc=yourdomain,dc=net"
-# The following file contains the raw password of the BINDDN
-# Create it with something like : echo -n 'secret' > $BINDPWDFILE
-# WARNING !!!! Be careful not to make this file world-readable
+#The following file contains the raw password of the BINDDN
+#Create it with something like : echo -n 'secret' > $BINDPWDFILE
+#WARNING !!!! Be careful not to make this file world-readable
 BINDPWDFILE="/etc/ldapscripts/ldapscripts.passwd"
-# For older versions of OpenLDAP, it is still possible to use
-# unsecure command-line passwords by defining the following option
-# AND commenting the previous one (BINDPWDFILE takes precedence)
+#For older versions of OpenLDAP, it is still possible to use
+#unsecure command-line passwords by defining the following option
+#AND commenting the previous one (BINDPWDFILE takes precedence)
 #BINDPWD="secret"
 
-# Start with these IDs *if no entry found in LDAP*
+#Start with these IDs *if no entry found in LDAP*
 GIDSTART="10000" # Group ID
 UIDSTART="10000" # User ID
 MIDSTART="20000" # Machine ID
 
-# Group membership management
-# ObjectCLass used for groups
-# Possible values : posixGroup, groupOfNames, groupOfUniqueNames (case-sensitive !)
-# Warning : when using groupOf*, be sure to be compliant with RFC 2307bis (AUXILIARY posixGroup).
-# Also, do not mix posixGroup and groupOf* entries up in you directory as, within RFC 2307bis,
-# the former is a subset of the latter. The ldapscripts wouldn't cope well with this configuration.
+#Group membership management
+#ObjectCLass used for groups
+#Possible values : posixGroup, groupOfNames, groupOfUniqueNames (case-sensitive !)
+#Warning : when using groupOf*, be sure to be compliant with RFC 2307bis (AUXILIARY posixGroup).
+#Also, do not mix posixGroup and groupOf* entries up in you directory as, within RFC 2307bis,
+#the former is a subset of the latter. The ldapscripts wouldn't cope well with this configuration.
 GCLASS="posixGroup"   # Leave "posixGroup" here if not sure !
-# When using  groupOfNames or groupOfUniqueNames, creating a group requires an initial
-# member. Specify it below, you will be able to remove it once groups are populated.
+#When using  groupOfNames or groupOfUniqueNames, creating a group requires an initial
+#member. Specify it below, you will be able to remove it once groups are populated.
 #GDUMMYMEMBER="uid=dummy,$USUFFIX,$SUFFIX"
 
-# User properties
-# DEBIAN: values from /etc/adduser.conf are used.
+#User properties
+#DEBIAN: values from /etc/adduser.conf are used.
 #USHELL="/bin/sh"
 #UHOMES="/home/%u"     # You may use %u for username here
 CREATEHOMES="no"      # Create home directories and set rights ?
 #HOMESKEL="/etc/skel"  # Directory where the skeleton files are located. Ignored if undefined or nonexistant.
 #HOMEPERMS="755"       # Default permissions for home directories
 
-# User passwords generation
-# Command-line used to generate a password for added users.
-# You may use %u for username here ; special value "<ask>" will ask for a password interactively
-# WARNING    !!!! This is evaluated, everything specified here will be run !
-# WARNING(2) !!!! Some systems (Linux) use a blocking /dev/random (waiting for enough entropy).
-#                 In this case, consider using /dev/urandom instead.
+#User passwords generation
+#Command-line used to generate a password for added users.
+#You may use %u for username here ; special value "<ask>" will ask for a password interactively
+#WARNING    !!!! This is evaluated, everything specified here will be run !
+#WARNING(2) !!!! Some systems (Linux) use a blocking /dev/random (waiting for enough entropy).
+#                In this case, consider using /dev/urandom instead.
 #PASSWORDGEN="cat /dev/random | LC_ALL=C tr -dc 'a-zA-Z0-9' | head -c8"
 #PASSWORDGEN="pwgen"
 #PASSWORDGEN="echo changeme"
@@ -140,30 +163,30 @@ CREATEHOMES="no"      # Create home directories and set rights ?
 #PASSWORDGEN="<ask>"
 PASSWORDGEN="pwgen"
 
-# User passwords recording
-# you can keep trace of generated passwords setting PASSWORDFILE and RECORDPASSWORDS
-# (useful when performing a massive creation / net rpc vampire)
-# WARNING !!!! DO NOT FORGET TO DELETE THE GENERATED FILE WHEN DONE !
-# WARNING !!!! DO NOT FORGET TO TURN OFF RECORDING WHEN DONE !
+#User passwords recording
+#you can keep trace of generated passwords setting PASSWORDFILE and RECORDPASSWORDS
+#(useful when performing a massive creation / net rpc vampire)
+#WARNING !!!! DO NOT FORGET TO DELETE THE GENERATED FILE WHEN DONE !
+#WARNING !!!! DO NOT FORGET TO TURN OFF RECORDING WHEN DONE !
 RECORDPASSWORDS="no"
 PASSWORDFILE="/var/log/ldapscripts_passwd.log"
 
-# Where to log : local file and/or syslog
+#Where to log : local file and/or syslog
 LOGTOFILE="yes"
 LOGFILE="/var/log/ldapscripts.log"
 LOGTOSYSLOG="no"
 SYSLOGFACILITY="local4"
 SYSLOGLEVEL="info"
 
-# Temporary folder
+#Temporary folder
 #TMPDIR="/tmp"
 
-# Various binaries used within the scripts
-# Warning : they also use uuencode, date, grep, sed, cut, which... 
-# Please check they are installed before using these scripts
-# Note that many of them should come with your OS
+#Various binaries used within the scripts
+#Warning : they also use uuencode, date, grep, sed, cut, which... 
+#Please check they are installed before using these scripts
+#Note that many of them should come with your OS
 
-# OpenLDAP client commands
+#OpenLDAP client commands
 LDAPSEARCHBIN="/usr/bin/ldapsearch"
 LDAPADDBIN="/usr/bin/ldapadd"
 LDAPDELETEBIN="/usr/bin/ldapdelete"
@@ -171,42 +194,42 @@ LDAPMODIFYBIN="/usr/bin/ldapmodify"
 LDAPMODRDNBIN="/usr/bin/ldapmodrdn"
 LDAPPASSWDBIN="/usr/bin/ldappasswd"
 
-# OpenLDAP client common additional options
-# This allows for adding more configuration options to the OpenLDAP clients, e.g. '-ZZ' to enforce TLS
+#OpenLDAP client common additional options
+#This allows for adding more configuration options to the OpenLDAP clients, e.g. '-ZZ' to enforce TLS
 #LDAPBINOPTS="-ZZ"
 
-# OpenLDAP ldapsearch-specific additional options
-# The following option disables long-line wrapping (which makes the scripts bug
-# when handling long lines). The option was introduced in OpenLDAP 2.4.24, so
-# comment it if you are using OpenLDAP < 2.4.24.
+#OpenLDAP ldapsearch-specific additional options
+#The following option disables long-line wrapping (which makes the scripts bug
+#when handling long lines). The option was introduced in OpenLDAP 2.4.24, so
+#comment it if you are using OpenLDAP < 2.4.24.
 LDAPSEARCHOPTS="-o ldif-wrap=no"
-# And here is an example to activate paged results
+#And here is an example to activate paged results
 #LDAPSEARCHOPTS="-E pr=500/noprompt"
 
-# Character set conversion : $ICONVCHAR <-> UTF-8
-# Comment ICONVBIN to disable UTF-8 conversion
+#Character set conversion : $ICONVCHAR <-> UTF-8
+#Comment ICONVBIN to disable UTF-8 conversion
 #ICONVBIN="/usr/bin/iconv"
 #ICONVCHAR="ISO-8859-15"
 
-# Base64 decoding
-# Comment UUDECODEBIN to disable Base64 decoding
+#Base64 decoding
+#Comment UUDECODEBIN to disable Base64 decoding
 #UUDECODEBIN="/usr/bin/uudecode"
 
-# Getent command to use - choose the ones used
-# on your system. Leave blank or comment for auto-guess.
-# GNU/Linux
+#Getent command to use - choose the ones used
+#on your system. Leave blank or comment for auto-guess.
+#GNU/Linux
 #GETENTPWCMD="getent passwd"
 #GETENTGRCMD="getent group"
-# FreeBSD
+#FreeBSD
 #GETENTPWCMD="pw usershow"
 #GETENTGRCMD="pw groupshow"
-# Auto
+#Auto
 GETENTPWCMD=""
 GETENTGRCMD=""
 
-# You can specify custom LDIF templates here
-# Leave empty to use default templates
-# See *.template.sample for default templates
+#You can specify custom LDIF templates here
+#Leave empty to use default templates
+#See *.template.sample for default templates
 #GTEMPLATE="/path/to/ldapaddgroup.template"
 #UTEMPLATE="/path/to/ldapadduser.template"
 #MTEMPLATE="/path/to/ldapaddmachine.template"
