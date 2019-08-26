@@ -11,7 +11,7 @@ read OU
 
 sed -i -e s/Users/$OU/2 /etc/ldapscripts/ldapscripts.conf
 
-for (( i=1; i<=$total; i++))
+for (( i=1; i<=$total; i++ ))
 do
 ldapadduser $name$i 1000
 ldapsetpasswd $name$i $pass
