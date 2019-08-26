@@ -1,3 +1,5 @@
+#!/bin/bash
+
 echo "username?"
 read name
 echo "password?"
