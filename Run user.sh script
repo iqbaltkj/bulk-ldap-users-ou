@@ -1,6 +1,6 @@
 ---- give execute permission ----
-$ sudo chmod +x ldap.sh
+$ sudo chmod +x ou.sh
 
 
 ---- run the script ----
-$ sudo bash ldap.sh
+$ sudo bash ou.sh
